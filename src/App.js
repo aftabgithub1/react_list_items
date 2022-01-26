@@ -1,23 +1,101 @@
-import logo from './logo.svg';
-import './App.css';
+import Header from './Header';
+import SearchItem from './SearchItem';
+import Content from './Content';
+import AddItem from './AddItem';
+import apiRequest from './apiRequest';
+import Footer from './Footer';
+import { useState, useEffect } from 'react';
+
 
 function App() {
+  // ---------- useState ---------- //
+  const [items, setItems] = useState([]);
+  const [newItem, setNewItem] = useState('');
+  const [searchItem, setSearchItem] = useState('');
+  const [fetchError, setFetchError] = useState(null);
+  const [loadItems, setLoadItems] = useState(true);
+
+  // ---------- store ---------- //
+  const setAndStore = (data) => {
+    localStorage.setItem('listItemsLS', JSON.stringify(data));
+    setItems(data);
+  }
+
+  // ---------- useEffect ---------- //
+  useEffect(() => {
+    const fetchItems = async () => {
+      try {
+        const listItems = JSON.parse(localStorage.getItem('listItemsLS')) || [];
+        setItems(listItems);
+      } catch(err) {
+        setFetchError(err.message);
+      } finally {
+        setLoadItems(false);
+      }
+    }
+
+    setTimeout(() => {
+      fetchItems();
+    }, 2000);
+  }, []);
+
+  // ---------------- item checkbox ---------------- //
+  const handleCheck = async (id) => {
+    const listItems = items.map((item) => item.id === id ? { ...item, checked: !item.checked} : item);
+    setAndStore(listItems);
+  }
+
+  // ---------------- item delete ---------------- //
+  const handleDelete = async (id) => {
+    const listItems = items.filter((item) => item.id !== id);
+    setAndStore(listItems);
+  }
+  
+  // ---------------- item add submit button ---------------- //
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (!newItem) return;
+    // id auto increment
+    const id = items.length ? items[items.length - 1].id + 1 : 1;
+    // create new item
+    const myNewItem = {id, checked: false, name: newItem};
+    // add to item list
+    const listItems = [...items, myNewItem];
+    setAndStore(listItems);
+    setNewItem('');
+  }
+
+  // ---------------- item add submit button ---------------- //
+  const searchResult = items.filter(item => item.name.toLowerCase().includes(searchItem.toLowerCase()));
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className='container'>
+      <Header title="Grocery List" />
+      <div className="form">
+        <AddItem
+          newItem={newItem}
+          setNewItem={setNewItem}
+          handleSubmit={handleSubmit}
+        />
+        <SearchItem
+          searchItem={searchItem}
+          setSearchItem={setSearchItem}
+        />
+      </div>
+      <main>
+        { loadItems && <p className="big-error">Loading Items ...</p> }
+        { fetchError && <p class="big-error">Error: {fetchError}</p> }
+        { !fetchError && !loadItems && 
+          <Content
+            items={searchResult || items}
+            handleCheck={handleCheck}
+            handleDelete={handleDelete}
+          /> 
+        }
+      </main>
+      <Footer
+        itemsLength={items.length}
+      />
     </div>
   );
 }

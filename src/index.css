@@ -1,5 +1,12 @@
-body {
+:root{
+  --primary: #66f;
+}
+* {
   margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
@@ -7,7 +14,201 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+ul {
+  list-style-type: none;
+  width: 100%;
+}
+
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+header,
+footer {
+  height: 6vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--primary);
+  color: white;
+
+}
+
+footer {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+}
+
+footer a {
+  text-decoration: none;
+  color: white;
+}
+
+footer a:hover {
+  text-decoration: underline;
+  color: aqua;
+}
+
+.container {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+@media screen and (min-width: 640px) {
+  .container {
+    width: 50vw;
+    margin: auto;
+    box-shadow: 0 0 5px gray;
+  }
+}
+main {
+  flex-grow: 1;
+  overflow: auto;
+}
+
+/* ------------ scrollbar ------------ */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-thumb {
+  background-color: #bbb;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background-color: #888;
+}
+
+/* ------------ items ------------ */
+
+.item {
+  margin: .5em;
+  padding: .5em;
+  background-color: wheat;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+}
+
+
+/* ------------ checbox ------------ */
+input[type="checkbox"] {
+  appearance: none;
+  width: 2em;
+  height: 2em;
+  margin: 0 1em;
+  background-color: #c8c8df;
+  border-radius: 5px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid rgb(184, 185, 221);
+  
+}
+
+input[type="checkbox"]:hover {
+  border: 1px solid #668
+}
+
+input[type="checkbox"]:checked {
+  background: linear-gradient(300deg, rgba(184, 185, 221,0.8), rgba(255,255,255,1), rgba(184, 185, 221,0.4));
+  border: 1px solid #668;
+}
+
+input[type="checkbox"]:after {
+  content: '✓';
+  font-size: 1.5em;
+  font-weight: 700;
+  display: none;
+  line-height: 0;
+}
+
+input[type="checkbox"]:checked:after {
+  display: block;
+}
+
+
+/* ------------ acton buttons ------------ */
+.item-action {
+  margin-left: auto;
+}
+.item-action * {
+  margin: .4em;
+  font-size: 1.2em;
+  color: #668;
+  cursor: pointer;
+}
+
+/* ------------ add item ------------ */
+.add-item {
+  margin: .5em;
+  display: flex;
+  gap: .5em;
+}
+
+.add-item label {
+  display: none;
+}
+
+.add-item #addItem {
+  flex-grow: 1;
+  height: 2.5em;
+  padding: .5em ;
+  border: 1px solid gray;
+  border-radius: 5px;
+}
+
+.add-item #addItem:focus {
+  outline: 2px solid aqua;
+}
+
+.add-item button {
+  width: 2.5em;
+  border: none;
+  background-color: aqua;
+  border-radius: 5px;
+}
+
+.add-item button:hover {
+  background-color: #668;
+  color: white;
+}
+
+.add-item button:active {
+  background-color: antiquewhite;
+  color: initial;
+  outline: 2px solid aqua;
+}
+
+
+/* ------------ add item ------------ */
+.search-item {
+  margin: .5em;
+  gap: .5em;
+}
+
+.search-item label {
+  display: none;
+}
+
+.search-item #searchItem {
+  width: 100%;
+  height: 2.5em;
+  padding: .5em ;
+  border: 1px solid gray;
+  border-radius: 5px;
+}
+
+.search-item #searchItem:focus {
+  outline: 2px solid aqua;
+}
+
+/* ------------ Error Handeling ------------ */
+.big-error {
+  color: red;
+  font-size: 1.2em;
+  text-align: center;
+  font-weight: 600;
 }
