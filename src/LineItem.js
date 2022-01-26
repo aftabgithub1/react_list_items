@@ -12,10 +12,6 @@ function LineItem({ item, handleCheck, handleDelete }) {
         />
         <label htmlFor={item.id}>{item.name}</label>
         <span className="item-action">
-          <FaEdit
-            role="button"
-            tabIndex='0'
-          />
           <FaTrashAlt 
             role="button"
             tabIndex='0'
