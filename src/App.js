@@ -8,6 +8,19 @@ import { useState, useEffect } from 'react';
 
 
 function App() {
+  const initialListItems = [
+    {
+      "id": 3,
+      "checked": false,
+      "name": "Chocolate"
+    },
+    {
+      "id": 1,
+      "checked": false,
+      "name": "Pizza"
+    }
+  ];
+
   // ---------- useState ---------- //
   const [items, setItems] = useState([]);
   const [newItem, setNewItem] = useState('');
@@ -25,7 +38,7 @@ function App() {
   useEffect(() => {
     const fetchItems = async () => {
       try {
-        const listItems = JSON.parse(localStorage.getItem('listItemsLS')) || [];
+        const listItems = JSON.parse(localStorage.getItem('listItemsLS')) || initialListItems;
         setItems(listItems);
       } catch(err) {
         setFetchError(err.message);
